@@ -58,7 +58,7 @@
     foreach($items as $key=>$arr){
       if($disp[$key]){
         echo(".".$key."{width:".$arr["wd"]."px;}");
-        for($i=0;$i<count($arr["en"]);$i++){
+        foreach($arr["en"] as $c){
           $whole+=$arr["wd"];
         }
       }
@@ -265,10 +265,10 @@
           foreach($items as $arr){
             if($arr["pd"]==0){continue;}
             $itemlist[$i]=array();
-            $qer = "SELECT DISTINCT `".$arr["en"]."` FROM characteristic";
+            $qer = "SELECT DISTINCT `".$arr["en"][0]."` FROM characteristic";
             $res = $sql->query($qer);
             while($row = $res->fetch_array(MYSQLI_BOTH)){
-              $itemlist[$i][]=$row[$arr["en"]];
+              $itemlist[$i][]=$row[$arr["en"][0]];
             }
             $i++;
           }
