@@ -121,7 +121,7 @@
         <script type="text/javascript">
           <?php
             if(!$issub){
-              //echo("all_c.click();load.click();");
+              echo("all_c.click();load.click();");
             }
           ?>
 
@@ -273,6 +273,7 @@
             $i++;
           }
           mysqli_free_result($res);
+
           mysql_close();
         ?>
         </tbody>
@@ -280,7 +281,7 @@
       </div>
 
       <script type="text/javascript">
-        window.onload=itemset;
+        window.onload=itemset();
         function itemset(){
           refineset();
           likeset();
@@ -330,7 +331,6 @@
         function pulldownset(){
           var pulldown=document.getElementsByClassName("pulldown");
           if(pulldown.length>1){
-alert("234");
             <?php
               for($i=0;$i<count($itemlist);$i++){
                 echo("pulldown[$i].options[0]=new Option(\"全て選択\",\"\");\n");
@@ -340,7 +340,6 @@ alert("234");
               }
             ?>
           }elseif(pulldown.length==1){
-alert("1");
             <?php
                 echo("pulldown.options[0]=new Option(\"全て選択\",\"\");\n");
                 for($j=0;$j<count($itemlist[0]);$j++){
