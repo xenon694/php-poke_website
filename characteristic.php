@@ -35,11 +35,12 @@
 /*▼▼▼▼▼▼項目配列▼▼▼▼▼▼*/
           $items=array(
 "no"=>array("ja"=>"No","en"=>array("no","mod"),"ex"=>"通し番号","pd"=>0,"tx"=>0,"vl"=>1,"wd"=>50),
-"name"=>array("ja"=>"名前","en"=>"name","ex"=>"個性","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200),
-"name_ka"=>array("ja"=>"漢字","en"=>"name_ka","ex"=>"漢字で表示した時の表記(BW以降)","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200),
-"name_en"=>array("ja"=>"英語","en"=>"name_en","ex"=>"英語版での表記","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200),
-//"mod"=>array("ja"=>"余り","en"=>"mod","ex"=>"一番高い個体値を5で割った余り","pd"=>1,"tx"=>0,"vl"=>1,"wd"=>50),
-"stat"=>array("ja"=>"能力","en"=>"stat","ex"=>"一番高いステータス","pd"=>1,"tx"=>0,"vl"=>0,"wd"=>50)
+"name"=>array("ja"=>"名前","en"=>array("name"),"ex"=>"個性","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200),
+"name_ka"=>array("ja"=>"漢字","en"=>array("name_ka"),"ex"=>"漢字で表示した時の表記(BW以降)","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200),
+"name_en"=>array("ja"=>"英語","en"=>array("name_en"),"ex"=>"英語版での表記","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200),
+//"mod"=>array("ja"=>"余り","en"=>array("mod"),"ex"=>"一番高い個体値を5で割った余り","pd"=>1,"tx"=>0,"vl"=>1,"wd"=>50),
+"stat"=>array("ja"=>"能力","en"=>array("stat"),"ex"=>"一番高いステータス","pd"=>1,"tx"=>0,"vl"=>0,"wd"=>50)
+//""=>array("ja"=>"","en"=>array(""),"ex"=>"","pd"=>0,"tx"=>0,"vl"=>0,"wd"=>0),
 );
 /*▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲*/
           $disp=array();
@@ -49,7 +50,7 @@
 
           $sort=$_GET['sort'];
           $order=$_GET['order'];
-          $issub=$_GET['info'];
+          $issub=$_GET['search'];
         ?>
 <style type="text/css">
   <?php
@@ -97,8 +98,7 @@
               echo("<br>");
             }
           ?>
-
-          <input type="hidden" name="info" value="send">
+          <input type="hidden" name="search" value="1">
 
 <!--■並べ替え選択■-->
           <select name="sort">
@@ -160,11 +160,7 @@
           <?php
             foreach($items as $key=>$arr){
               if($disp[$key]){
-                if(is_array($arr["en"])){
-                  foreach($arr["en"] as $names){
-                    echo"<th class=\"".$key."\">".$arr["ja"]."</th>";
-                  }
-                }else{
+                foreach($arr["en"] as $names){
                   echo"<th class=\"".$key."\">".$arr["ja"]."</th>";
                 }
               }
@@ -255,12 +251,8 @@
             echo("<tr>");
             foreach($items as $key=>$arr){
               if($disp[$key]){
-                if(is_array($arr["en"])){
-                  foreach($arr["en"] as $names){
-                    echo("<td class=\"".$key."\">".$row[$names]."</td>");
-                  }
-                }else{
-                  echo("<td class=\"".$key."\">".$row[$arr["en"]]."</td>");
+                foreach($arr["en"] as $names){
+                  echo("<td class=\"".$key."\">".$row[$names]."</td>");
                 }
               }
             }
