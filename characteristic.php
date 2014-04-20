@@ -77,7 +77,7 @@
               echo("<label><input type=\"checkbox\" class=\"disp\" name=\"".$key."\" value=\"1\"");
               if($disp[$key]==1){echo(" checked");}
               echo(">");
-              echo($arr["ja"].":".$arr["ex"]."</label><br>");
+              echo($arr["ja"].":".$arr["ex"]."</label><br>\n");
 
               // onChange=\"sele(".$i.");\"
 
@@ -95,7 +95,7 @@
                 echo("<select name=\"".$key."_pd\" class=\"pulldown\"></select>");
               }
 
-              echo("<br>");
+              echo("<br>\n");
             }
           ?>
           <input type="hidden" name="search" value="1">
@@ -262,7 +262,7 @@
 
           /*プルダウン選択作成*/
           $i=0;
-          foreach($items as $arr){
+          foreach($items as $key=>$arr){
             if($arr["pd"]==0){continue;}
             $itemlist[$i]=array();
             $qer = "SELECT DISTINCT `".$arr["en"][0]."` FROM characteristic";
@@ -330,6 +330,7 @@
         function pulldownset(){
           var pulldown=document.getElementsByClassName("pulldown");
           if(pulldown.length>1){
+alert("234");
             <?php
               for($i=0;$i<count($itemlist);$i++){
                 echo("pulldown[$i].options[0]=new Option(\"全て選択\",\"\");\n");
@@ -338,11 +339,12 @@
                 }
               }
             ?>
-          }else if(pulldown.length==1){
+          }elseif(pulldown.length==1){
+alert("1");
             <?php
                 echo("pulldown.options[0]=new Option(\"全て選択\",\"\");\n");
                 for($j=0;$j<count($itemlist[0]);$j++){
-                  echo("pulldown.options[".$j."]=new Option(\"".$itemlist[0][$j]."\",\"".$itemlist[0][$j]."\");\n");
+                  echo("pulldown.options[".($j+1)."]=new Option(\"".$itemlist[0][$j]."\",\"".$itemlist[0][$j]."\");\n");
                 }
             ?>
           }
