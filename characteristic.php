@@ -33,6 +33,7 @@
 
         <?php
 /*▼▼▼▼▼▼項目配列▼▼▼▼▼▼*/
+$tablename="";
           $items=array(
 "no"=>array("ja"=>"No","en"=>array("no","mod"),"ex"=>"通し番号","pd"=>0,"tx"=>0,"vl"=>1,"wd"=>50),
 "name"=>array("ja"=>"名前","en"=>array("name"),"ex"=>"個性","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200),
@@ -57,7 +58,7 @@
     $whole=0;
     foreach($items as $key=>$arr){
       if($disp[$key]){
-        echo(".".$key."{width:".$arr["wd"]."px;}");
+        echo(".".$key."{width:".$arr["wd"]."px;}\n");
         foreach($arr["en"] as $c){
           $whole+=$arr["wd"];
         }
@@ -84,15 +85,24 @@
               if($arr["tx"]){
                 echo("<input type=\"text\" name=\"".$key."_tx\">");
                 echo("<select class=\"like\" name=\"".$key."_lk\"></select>");
+                if(count($arr["en"])>1){
+                  echo("<label><input type=\"checkbox\" name=\"or\" value=\"1\">OR検索</label>");
+                }
               }
 
               if($arr["vl"]){
                 echo("<input type=\"text\" name=\"".$key."_vl\">");
                 echo("<select class=\"refine\" name=\"".$key."_rf\"></select>");
+                if(count($arr["en"])>1){
+                  echo("<label><input type=\"checkbox\" name=\"or\" value=\"1\">OR検索</label>");
+                }
               }
 
               if($arr["pd"]){
                 echo("<select name=\"".$key."_pd\" class=\"pulldown\"></select>");
+                if(count($arr["en"])>1){
+                  echo("<label><input type=\"checkbox\" name=\"or\" value=\"1\">OR検索</label>");
+                }
               }
 
               echo("<br>\n");
@@ -115,7 +125,7 @@
             <option value="DESC">降順</option>
           </select>
           <input type="submit" id="load" value="更新"><br>
-          <input type="reset" id="load"><br>
+          <input type="reset"><br>
         </form>
 
         <script type="text/javascript">
@@ -168,7 +178,6 @@
           ?>
           </tr>
         </thead>
-
         <!--●データ●-->
         <tbody id="data">
         <?php
@@ -281,8 +290,7 @@
       </div>
 
       <script type="text/javascript">
-        window.onload=itemset();
-        function itemset(){
+        window.onload=function(){
           refineset();
           likeset();
           pulldownset();
@@ -292,63 +300,40 @@
           var refine=document.getElementsByClassName("refine");
           var item={"":"絞り込み","=":"等しい","<>":"等しくない",">=":"以上","<=":"以下",">":"より大きい","<":"より小さい"};
           var i=0;
-          if(refine.length>1){
-            for(var p=0;p<refine.length;p++){
-              i=0;
-              for(var key in item){
-                refine[p].options[i]=new Option(item[key],key);
-                i++;
-              }
+          for(var p=0;p<refine.length;p++){
+            i=0;
+            for(var key in item){
+              refine[p].options[i]=new Option(item[key],key);
+              i++;
             }
-          }else if(refine.length==1){
-              for(var key in item){
-                refine.options[i]=new Option(item[key],key);
-                i++;
-              }
           }
         }
 
         function likeset(){
           var like=document.getElementsByClassName("like");
-          var item={"":"絞り込み","match":"と一致する","include":"を含む","start":"から始まる","end":"で終わる"}
-         var i=0;
-          if(like.length>1){
-            for(var p=0;p<like.length;p++){
-              i=0;
-              for(var key in item){
-                like[p].options[i]=new Option(item[key],key);
-                i++;
-              }
+          var item={"":"絞り込み","match":"と一致する","include":"を含む","start":"から始まる","end":"で終わる"};
+          var i=0;
+          for(var p=0;p<like.length;p++){
+            i=0;
+            for(var key in item){
+              like[p].options[i]=new Option(item[key],key);
+              i++;
             }
-          }else if(like.length==1){
-              for(var key in item){
-                like.options[i]=new Option(item[key],key);
-                i++;
-              }
           }
         }
-
         function pulldownset(){
           var pulldown=document.getElementsByClassName("pulldown");
-          if(pulldown.length>1){
-            <?php
-              for($i=0;$i<count($itemlist);$i++){
-                echo("pulldown[$i].options[0]=new Option(\"全て選択\",\"\");\n");
-                for($j=0;$j<count($itemlist[$i]);$j++){
-                  echo("pulldown[$i].options[".($j+1)."]=new Option(\"".$itemlist[$i][$j]."\",\"".$itemlist[$i][$j]."\");\n");
-                }
+          <?php
+            for($i=0;$i<count($itemlist);$i++){
+              echo("pulldown[$i].options[0]=new Option(\"全て選択\",\"\");\n");
+              for($j=0;$j<count($itemlist[$i]);$j++){
+                echo("pulldown[$i].options[".($j+1)."]=new Option(\"".$itemlist[$i][$j]."\",\"".$itemlist[$i][$j]."\");\n");
               }
-            ?>
-          }elseif(pulldown.length==1){
-            <?php
-                echo("pulldown.options[0]=new Option(\"全て選択\",\"\");\n");
-                for($j=0;$j<count($itemlist[0]);$j++){
-                  echo("pulldown.options[".($j+1)."]=new Option(\"".$itemlist[0][$j]."\",\"".$itemlist[0][$j]."\");\n");
-                }
-            ?>
+            }
+          ?>
           }
-        }
       </script>
+
       <!--■メールフォーム■-->
       <?php include 'mailform/contact.html';	?>
     </div>
