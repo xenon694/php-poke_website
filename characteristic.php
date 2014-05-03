@@ -9,9 +9,9 @@
   <link media="only screen and (max-device-width:480px)" href="mobile.css" type="text/css" rel="stylesheet" />
   <link media="screen and (min-device-width:481px)" href="design.css" type="text/css" rel="stylesheet" />
 
-<!--▼▼タイトル▼▼-->
-  <title>こせい - ポケモンデータ情報局</title>
-<!--▲▲▲▲▲▲▲▲-->
+<!--▼▼▼▼▼タイトル▼▼▼▼▼-->
+  <title>こせい - Pnラボ</title>
+<!--▲▲▲▲▲▲▲▲▲▲▲▲▲▲-->
 </head>
 
 <!--■タイトル■-->
@@ -33,18 +33,19 @@
 
         <?php
 /*▼▼▼▼▼▼項目配列▼▼▼▼▼▼*/
-$tablename="";
-          $items=array(
-"no"=>array("ja"=>"No","en"=>array("no","mod"),"ex"=>"通し番号","pd"=>0,"tx"=>0,"vl"=>1,"wd"=>50),
-"name"=>array("ja"=>"名前","en"=>array("name"),"ex"=>"個性","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200),
-"name_ka"=>array("ja"=>"漢字","en"=>array("name_ka"),"ex"=>"漢字で表示した時の表記(BW以降)","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200),
-"name_en"=>array("ja"=>"英語","en"=>array("name_en"),"ex"=>"英語版での表記","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200),
-//"mod"=>array("ja"=>"余り","en"=>array("mod"),"ex"=>"一番高い個体値を5で割った余り","pd"=>1,"tx"=>0,"vl"=>1,"wd"=>50),
-"stat"=>array("ja"=>"能力","en"=>array("stat"),"ex"=>"一番高いステータス","pd"=>1,"tx"=>0,"vl"=>0,"wd"=>50)
-//""=>array("ja"=>"","en"=>array(""),"ex"=>"","pd"=>0,"tx"=>0,"vl"=>0,"wd"=>0),
-);
+$tablename='';
+          $items=[
+"no"=>["ja"=>"No","en"=>["no"],"ex"=>"通し番号","pd"=>0,"tx"=>0,"vl"=>2,"wd"=>50],
+"name"=>["ja"=>"名前","en"=>["name"],"ex"=>"個性","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200],
+"name_ka"=>["ja"=>"漢字","en"=>["name_ka"],"ex"=>"漢字で表示した時の表記(BW以降)","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200],
+"name_en"=>["ja"=>"英語","en"=>["name_en"],"ex"=>"英語版での表記","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200],
+"mod"=>["ja"=>"余り","en"=>["mod"],"ex"=>"一番高い個体値を5で割った余り","pd"=>1,"tx"=>0,"vl"=>1,"wd"=>50],
+"stat"=>["ja"=>"能力","en"=>["stat"],"ex"=>"一番高いステータス","pd"=>1,"tx"=>0,"vl"=>0,"wd"=>50]
+//""=>["ja"=>"","en"=>[""],"ex"=>"","pd"=>0,"tx"=>0,"vl"=>0,"wd"=>0],
+];
 /*▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲*/
-          $disp=array();
+
+          $disp=[];
           foreach($items as $key=>$arr){
             $disp[$key]=$_GET[$key];
           }
@@ -53,6 +54,7 @@ $tablename="";
           $order=$_GET['order'];
           $issub=$_GET['search'];
         ?>
+
 <style type="text/css">
   <?php
     $whole=0;
@@ -82,27 +84,27 @@ $tablename="";
 
               // onChange=\"sele(".$i.");\"
 
-              if($arr["tx"]){
-                echo("<input type=\"text\" name=\"".$key."_tx\">");
-                echo("<select class=\"like\" name=\"".$key."_lk\"></select>");
-                if(count($arr["en"])>1){
-                  echo("<label><input type=\"checkbox\" name=\"or\" value=\"1\">OR検索</label>");
-                }
+              for($i=1;$i<=$arr["tx"];$i++){
+                echo("<input type=\"text\" name=\"".$key."_tx".$i."\" value=\""."\">");
+                echo("<select class=\"like\" name=\"".$key."_lk".$i."\"></select>");
+              }
+              if($arr["tx"]&&count($arr["en"])>1){
+                echo("<label><input type=\"checkbox\" name=\"".$key."_txor\" value=\"1\">OR検索</label>");
               }
 
-              if($arr["vl"]){
-                echo("<input type=\"text\" name=\"".$key."_vl\">");
-                echo("<select class=\"refine\" name=\"".$key."_rf\"></select>");
-                if(count($arr["en"])>1){
-                  echo("<label><input type=\"checkbox\" name=\"or\" value=\"1\">OR検索</label>");
-                }
+              for($i=1;$i<=$arr["vl"];$i++){
+                echo("<input type=\"text\" name=\"".$key."_vl".$i."\" value=\""."\">");
+                echo("<select class=\"refine\" name=\"".$key."_rf".$i."\"></select>");
+              }
+              if($arr["vl"]&&count($arr["en"])>1){
+                echo("<label><input type=\"checkbox\" name=\"".$key."_vlor\" value=\"1\">OR検索</label>");
               }
 
-              if($arr["pd"]){
-                echo("<select name=\"".$key."_pd\" class=\"pulldown\"></select>");
-                if(count($arr["en"])>1){
-                  echo("<label><input type=\"checkbox\" name=\"or\" value=\"1\">OR検索</label>");
-                }
+              for($i=1;$i<=$arr["pd"];$i++){
+                echo("<select name=\"".$key."_pd".$i."\" class=\"pulldown\"></select>");
+              }
+              if($arr["pd"]&&count($arr["en"])>1){
+                echo("<label><input type=\"checkbox\" name=\"".$key."_pdor\" value=\"1\">OR検索</label>");
               }
 
               echo("<br>\n");
@@ -121,8 +123,8 @@ $tablename="";
             ?>
           </select>
           <select name="order">
-            <option value="ASC" selected>昇順</option>
-            <option value="DESC">降順</option>
+            <option value="ASC" <?php if($order=="ASC"){echo(" selected");} ?>>昇順</option>
+            <option value="DESC" <?php if($order=="DESC"){echo(" selected");} ?>>降順</option>
           </select>
           <input type="submit" id="load" value="更新"><br>
           <input type="reset"><br>
@@ -141,22 +143,6 @@ $tablename="";
               elem[i].checked=state;
             }
           }
-/*
-          function sele(index){
-            var refine=document.getElementsByName("refine");
-            var pulldown=document.getElementsByClassName("pulldown");
-            var sindex=refine[index].selectedIndex;
-            switch(sindex){
-              case 10:
-                pulldown[index].disabled=false;
-                break;
-              default:
-                pulldown[index].disabled=true;
-                break;
-                
-            }
-          }
-*/
         </script>
       </div>
 
@@ -192,66 +178,128 @@ $tablename="";
           /*■SQL作成■*/
           $qer = "SELECT * FROM characteristic";
           /*●検索文作成●*/
-/*
+
           $first=true;
+
+          $input=[];
           foreach($items as $key=>$arr){
-            if($arr["vl"]){
-              $refine=$_GET[$arr["en"]."_rf"];
-              $vl=$_GET[$arr["en"]."_vl"];
-              if($refine!=""&&$vl!=""){
+            for($i=0;$i<$arr["vl"];$i++){
+              if($i==0){
+                $input[$key]["vl"][$i]["or"]=$_GET[$key."_vlor"];
+              }
+              $input[$key]["vl"][$i+1]["rf"]=$_GET[$key."_rf".($i+1)];
+              $input[$key]["vl"][$i+1]["vl"]=$_GET[$key."_vl".($i+1)];
+            }
+            for($i=0;$i<$arr["tx"];$i++){
+              if($i==0){
+                $input[$key]["tx"][$i]["or"]=$_GET[$key."_txor"];
+              }
+              $input[$key]["tx"][$i+1]["lk"]=$_GET[$key."_lk".($i+1)];
+              $input[$key]["tx"][$i+1]["tx"]=$_GET[$key."_tx".($i+1)];
+            }
+            for($i=0;$i<$arr["pd"];$i++){
+              if($i==0){
+                $input[$key]["pd"][$i]["or"]=$_GET[$key."_pdor"];
+              }
+              $input[$key]["pd"][$i+1]["pd"]=$_GET[$key."_pd".($i+1)];
+            }
+          }
+var_dump($input);
+/*
+            for($i=0;$i<$arr["vl"];$i++){
+              if($input[$key][$i]!=""&&$vl[$key][$i]!=""){
                 if($first){
                   $qer = $qer." WHERE";
                   $first=false;
+                }elseif($i>0&&$vlor){
+                  $qer = $qer." OR";
                 }else{
                   $qer = $qer." AND";
                 }
-                $qer = $qer." `".$arr["en"]."`".$refine."'".$vl."'";
+                if(!$vlor||$i==0){
+                  $qer = $qer." ( ";
+                }
+                foreach($arr["en"] as $index=>$names){
+                  if($index>0){
+                    $qer = $qer." OR";
+                  }
+                  $qer = $qer." `".$names."`".$refine."'".$vl."'";
+                }
+                if(!$vlor||$i==$arr["vl"]-1){
+                  $qer = $qer." ) ";
+                }
               }
             }
-            if($arr["tx"]){
-              $like=$_GET[$arr["en"]."_lk"];
-              $tx=$_GET[$arr["en"]."_tx"];
+
+            for($i=0;$i<$arr["tx"];$i++){
               if($like!=""&&$tx!=""){
                 if($first){
                   $qer = $qer." WHERE";
                   $first=false;
+                }elseif($i>0&&$or){
+                  $qer = $qer." OR";
                 }else{
                   $qer = $qer." AND";
                 }
-                $qer = $qer." `".$arr["en"]."` LIKE";
-                switch($like){
-                  case "match":
-                    $qer = $qer." '".$tx."'";
-                    break;
-                  case "include":
-                    $qer = $qer." '%".$tx."%'";
-                    break;
-                  case "start":
-                    $qer = $qer." '".$tx."%'";
-                    break;
-                  case "end":
-                    $qer = $qer." '%".$tx."'";
-                    break;
+                if(!$or||$i==0){
+                  $qer = $qer." ( ";
+                }
+                foreach($arr["en"] as $index=>$names){
+                  if($index>0){
+                    $qer = $qer." OR";
+                  }
+                  $qer = $qer." `".$names."` LIKE";
+                  switch($like){
+                    case "match":
+                      $qer = $qer." '".$tx."'";
+                      break;
+                    case "include":
+                      $qer = $qer." '%".$tx."%'";
+                      break;
+                    case "start":
+                      $qer = $qer." '".$tx."%'";
+                      break;
+                    case "end":
+                      $qer = $qer." '%".$tx."'";
+                      break;
+                  }
+                }
+                if(!$or||$i==$arr["tx"]-1){
+                  $qer = $qer." ) ";
                 }
               }
             }
-            if($arr["pd"]){
-              $pd=$_GET[$arr["en"]."_pd"];
+
+            for($i=0;$i<$arr["pd"];$i++){
               if($pd!=""){
                 if($first){
                   $qer = $qer." WHERE";
                   $first=false;
+                }elseif($i>0&&$or){
+                  $qer = $qer." OR";
                 }else{
                   $qer = $qer." AND";
                 }
-                $qer = $qer." `".$arr["en"]."`='".$pd."'";
+                if(!$or||$i==0){
+                  $qer = $qer." ( ";
+                }
+                foreach($arr["en"] as $index=>$names){
+                  if($index>0){
+                    $qer = $qer." OR ";
+                  }
+                  $qer = $qer." `".$names."`='".$pd."'";
+                }
+                if(!$or||$i==$arr["pd"]-1){
+                  $qer = $qer." ) ";
+                }
               }
             }
           }
+*/
 
           $qer = $qer." ORDER BY `".$sort."` ".$order;
-*/
-          //var_dump($qer);
+          var_dump($qer);
+          var_dump($input);
           /*■データ取り出し■*/
           $res = $sql->query($qer);
           if(!$res){die("エラー");}
@@ -273,7 +321,7 @@ $tablename="";
           $i=0;
           foreach($items as $key=>$arr){
             if($arr["pd"]==0){continue;}
-            $itemlist[$i]=array();
+            $itemlist[$i]=[);
             $qer = "SELECT DISTINCT `".$arr["en"][0]."` FROM characteristic";
             $res = $sql->query($qer);
             while($row = $res->fetch_array(MYSQLI_BOTH)){
@@ -332,6 +380,11 @@ $tablename="";
             }
           ?>
           }
+
+          function beforeset(){
+            
+          }
+
       </script>
 
       <!--■メールフォーム■-->
