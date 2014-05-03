@@ -33,19 +33,20 @@
 
         <?php
 /*▼▼▼▼▼▼項目配列▼▼▼▼▼▼*/
-$tablename='';
+$tablename="";
           $items=[
-"no"=>["ja"=>"No","en"=>["no"],"ex"=>"通し番号","pd"=>0,"tx"=>0,"vl"=>2,"wd"=>50],
-"name"=>["ja"=>"名前","en"=>["name"],"ex"=>"個性","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200],
-"name_ka"=>["ja"=>"漢字","en"=>["name_ka"],"ex"=>"漢字で表示した時の表記(BW以降)","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200],
-"name_en"=>["ja"=>"英語","en"=>["name_en"],"ex"=>"英語版での表記","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200],
-"mod"=>["ja"=>"余り","en"=>["mod"],"ex"=>"一番高い個体値を5で割った余り","pd"=>1,"tx"=>0,"vl"=>1,"wd"=>50],
-"stat"=>["ja"=>"能力","en"=>["stat"],"ex"=>"一番高いステータス","pd"=>1,"tx"=>0,"vl"=>0,"wd"=>50]
+"no"=>["ja"=>"No","en"=>array("no"),"ex"=>"通し番号","pd"=>0,"tx"=>0,"vl"=>2,"wd"=>50],
+"name"=>["ja"=>"名前","en"=>array("name"),"ex"=>"個性","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200],
+"name_ka"=>["ja"=>"漢字","en"=>array("name_ka"),"ex"=>"漢字で表示した時の表記(BW以降)","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200],
+"name_en"=>["ja"=>"英語","en"=>array("name_en"),"ex"=>"英語版での表記","pd"=>0,"tx"=>1,"vl"=>0,"wd"=>200],
+"mod"=>["ja"=>"余り","en"=>array("mod"),"ex"=>"一番高い個体値を5で割った余り","pd"=>1,"tx"=>0,"vl"=>1,"wd"=>50],
+"stat"=>["ja"=>"能力","en"=>array("stat"),"ex"=>"一番高いステータス","pd"=>1,"tx"=>0,"vl"=>0,"wd"=>50]
 //""=>["ja"=>"","en"=>[""],"ex"=>"","pd"=>0,"tx"=>0,"vl"=>0,"wd"=>0],
 ];
+
 /*▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲*/
 
-          $disp=[];
+          $disp=array();
           foreach($items as $key=>$arr){
             $disp[$key]=$_GET[$key];
           }
@@ -180,7 +181,7 @@ $tablename='';
           /*●検索文作成●*/
 
           $first=true;
-
+/*
           $input=[];
           foreach($items as $key=>$arr){
             for($i=0;$i<$arr["vl"];$i++){
@@ -204,7 +205,7 @@ $tablename='';
               $input[$key]["pd"][$i+1]["pd"]=$_GET[$key."_pd".($i+1)];
             }
           }
-var_dump($input);
+*/
 /*
             for($i=0;$i<$arr["vl"];$i++){
               if($input[$key][$i]!=""&&$vl[$key][$i]!=""){
@@ -298,8 +299,8 @@ var_dump($input);
 */
 
           $qer = $qer." ORDER BY `".$sort."` ".$order;
-          var_dump($qer);
-          var_dump($input);
+          //var_dump($qer);
+          //var_dump($input);
           /*■データ取り出し■*/
           $res = $sql->query($qer);
           if(!$res){die("エラー");}
@@ -321,7 +322,7 @@ var_dump($input);
           $i=0;
           foreach($items as $key=>$arr){
             if($arr["pd"]==0){continue;}
-            $itemlist[$i]=[);
+            $itemlist[$i]=array();
             $qer = "SELECT DISTINCT `".$arr["en"][0]."` FROM characteristic";
             $res = $sql->query($qer);
             while($row = $res->fetch_array(MYSQLI_BOTH)){
