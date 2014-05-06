@@ -348,6 +348,7 @@ $tablename='';
           refineset();
           likeset();
           pulldownset();
+          beforeset();
         }
 
         function refineset(){
@@ -387,11 +388,40 @@ $tablename='';
               }
             }
           ?>
-          }
+        }
 
-          function beforeset(){
-            
-          }
+        function beforeset(){
+          var refine=document.getElementsByClassName("refine");
+          var like=document.getElementsByClassName("like");
+          var pulldown=document.getElementsByClassName("pulldown");
+          <?php
+            foreach($items as $key=>$arr){
+              $p=0;
+              for($i=0;$i<$arr['vl'];$i++){
+                echo("for(i=0;i<7;i++){\n");
+                  echo('if(refine['.$p.'].options[i].value=="'.$input[$key]['vl'][$i+1]['pd']."\"){\n");
+                    echo("refine[".$p."].options[i].selected=true;\n");
+                    echo("break;\n}\n}\n");
+                $p++;
+              }
+              $p=0;
+              for($i=0;$i<$arr['tx'];$i++){
+                echo("for(i=0;i<5;i++){\n");
+                  echo('if(like['.$p.'].options[i].value=="'.$input[$key]['vl'][$i+1]['pd']."\"){\n");
+                    echo("like[".$p."].options[i].selected=true;\n");
+                    echo("break;\n}\n}\n");
+                $p++;
+              }
+              for($i=0;$i<$arr['pd'];$i++){
+                echo("for(i=0;i<100;i++){\n");
+                  echo('if(pulldown['.$p.'].options[i].value=="'.$input[$key]['vl'][$i+1]['pd']."\"){\n");
+                    echo("pulldown[".$p."].options[i].selected=true;\n");
+                    echo("break;\n}\n}\n");
+                $p++;
+              }
+            }
+          ?>
+        }
 
       </script>
 
