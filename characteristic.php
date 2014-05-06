@@ -46,9 +46,27 @@ $tablename='';
 
 /*Å£Å£Å£Å£Å£Å£Å£Å£Å£Å£Å£Å£Å£Å£Å£Å£Å£*/
 
-          $disp=[];
+          $input=[];
           foreach($items as $key=>$arr){
-            $disp[$key]=$_GET[$key];
+            $input[$key]['disp']=$_GET[$key];
+            for($i=0;$i<$arr['vl'];$i++){
+              if($i==0){$input[$key]['vl']['or']=$_GET[$key.'_vlor'];}
+              $input[$key]['vl'][$i+1]['pd']=$_GET[$key.'_rf'.($i+1)];
+              $input[$key]['vl'][$i+1]['tx']=$_GET[$key.'_vl'.($i+1)];
+            }
+            for($i=0;$i<$arr['tx'];$i++){
+              if($i==0){
+                $input[$key]['tx']['or']=$_GET[$key.'_txor'];
+              }
+              $input[$key]['tx'][$i+1]['pd']=$_GET[$key.'_lk'.($i+1)];
+              $input[$key]['tx'][$i+1]['tx']=$_GET[$key.'_tx'.($i+1)];
+            }
+            for($i=0;$i<$arr['pd'];$i++){
+              if($i==0){
+                $input[$key]['pd']['or']=$_GET[$key.'_pdor'];
+              }
+              $input[$key]['pd'][$i+1]['pd']=$_GET[$key.'_pd'.($i+1)];
+            }
           }
 
           $sort=$_GET['sort'];
@@ -60,7 +78,7 @@ $tablename='';
   <?php
     $whole=0;
     foreach($items as $key=>$arr){
-      if($disp[$key]){
+      if($input[$key]['disp']){
         echo('.'.$key.'{width:'.$arr['wd']."px;}\n");
         foreach($arr['en'] as $c){
           $whole+=$arr['wd'];
@@ -79,7 +97,7 @@ $tablename='';
           <?php
             foreach($items as $key=>$arr){
               echo('<label><input type="checkbox" class="disp" name="'.$key.'" value="1"');
-              if($disp[$key]==1){echo(' checked');}
+              if($input[$key]['disp']==1){echo(' checked');}
               echo('>');
               echo($arr['ja'].':'.$arr['ex']."</label><br>\n");
 
@@ -89,7 +107,8 @@ $tablename='';
                 echo('<input type="text" name="'.$key.'_tx'.$i.'" value="'.'">');
                 echo('<select class="like" name="'.$key.'_lk'.$i.'"></select>');
               }
-              if($arr['tx']&&count($arr['en'])>1){
+              //if($arr['tx']&&count($arr['en'])>1){
+              if($arr['tx']>1){
                 echo('<label><input type="checkbox" name="'.$key.'_txor" value="1">ORåüçı</label>');
               }
 
@@ -97,7 +116,8 @@ $tablename='';
                 echo('<input type="text" name="'.$key.'_vl'.$i.'" value="'.'">');
                 echo('<select class="refine" name="'.$key.'_rf'.$i.'"></select>');
               }
-              if($arr['vl']&&count($arr['en'])>1){
+              //if($arr['vl']&&count($arr['en'])>1){
+              if($arr['vl']>1){
                 echo('<label><input type="checkbox" name="'.$key.'_vlor" value="1">ORåüçı</label>');
               }
 
@@ -156,7 +176,7 @@ $tablename='';
           <tr id="head">
           <?php
             foreach($items as $key=>$arr){
-              if($disp[$key]){
+              if($input[$key]['disp']){
                 foreach($arr['en'] as $names){
                   echo('<th class="'.$key.'">'.$arr['ja'].'</th>');
                 }
@@ -182,58 +202,13 @@ $tablename='';
 
           $first=true;
 
-          $input=[];
+
           foreach($items as $key=>$arr){
             for($i=0;$i<$arr['vl'];$i++){
-              if($i==0){
-                $input[$key]['vl'][$i]['or']=$_GET[$key.'_vlor'];
-              }
-              $input[$key]['vl'][$i+1]['rf']=$_GET[$key.'_rf'.($i+1)];
-              $input[$key]['vl'][$i+1]['vl']=$_GET[$key.'_vl'.($i+1)];
-            }
-            for($i=0;$i<$arr['tx'];$i++){
-              if($i==0){
-                $input[$key]['tx'][$i]['or']=$_GET[$key.'_txor'];
-              }
-              $input[$key]['tx'][$i+1]['lk']=$_GET[$key.'_lk'.($i+1)];
-              $input[$key]['tx'][$i+1]['tx']=$_GET[$key.'_tx'.($i+1)];
-            }
-            for($i=0;$i<$arr['pd'];$i++){
-              if($i==0){
-                $input[$key]['pd'][$i]['or']=$_GET[$key.'_pdor'];
-              }
-              $input[$key]['pd'][$i+1]['pd']=$_GET[$key.'_pd'.($i+1)];
-            }
-          }
-
-/*
-            for($i=0;$i<$arr['vl'];$i++){
-              if($input[$key][$i]!=''&&$vl[$key][$i]!=''){
-                if($first){
-                  $qer = $qer.' WHERE';
-                  $first=false;
-                }elseif($i>0&&$vlor){
-                  $qer = $qer.' OR';
-                }else{
-                  $qer = $qer.' AND';
-                }
-                if(!$vlor||$i==0){
-                  $qer = $qer.' ( ';
-                }
-                foreach($arr['en'] as $index=>$names){
-                  if($index>0){
-                    $qer = $qer.' OR';
-                  }
-                  $qer = $qer.' `'.$names.'`'.$refine."'".$vl."'";
-                }
-                if(!$vlor||$i==$arr['vl']-1){
-                  $qer = $qer.' ) ';
-                }
-              }
-            }
-
-            for($i=0;$i<$arr['tx'];$i++){
-              if($like!=''&&$tx!=''){
+              $or=$input[$key]['vl']['or'];
+              $tx=$input[$key]['vl'][$i+1]['tx'];
+              $pd=$input[$key]['vl'][$i+1]['pd'];
+              if($tx!=''&&$pd!=''){
                 if($first){
                   $qer = $qer.' WHERE';
                   $first=false;
@@ -243,14 +218,42 @@ $tablename='';
                   $qer = $qer.' AND';
                 }
                 if(!$or||$i==0){
-                  $qer = $qer.' ( ';
+                  $qer = $qer.' (';
+                }
+                foreach($arr['en'] as $index=>$names){
+                  if($index>0){
+                    $qer = $qer.' OR';
+                  }
+                  $qer = $qer.' `'.$names.'`'.$pd."'".$tx."'";
+                }
+                if(!$or||$i==$arr['vl']-1){
+                  $qer = $qer.' )';
+                }
+              }
+            }
+
+            for($i=0;$i<$arr['tx'];$i++){
+              $or=$input[$key]['tx']['or'];
+              $tx=$input[$key]['tx'][$i+1]['tx'];
+              $pd=$input[$key]['tx'][$i+1]['pd'];
+              if($pd!=''&&$tx!=''){
+                if($first){
+                  $qer = $qer.' WHERE';
+                  $first=false;
+                }elseif($i>0&&$or){
+                  $qer = $qer.' OR';
+                }else{
+                  $qer = $qer.' AND';
+                }
+                if(!$or||$i==0){
+                  $qer = $qer.' (';
                 }
                 foreach($arr['en'] as $index=>$names){
                   if($index>0){
                     $qer = $qer.' OR';
                   }
                   $qer = $qer.' `'.$names.'` LIKE';
-                  switch($like){
+                  switch($pd){
                     case 'match':
                       $qer = $qer." '".$tx."'";
                       break;
@@ -266,12 +269,14 @@ $tablename='';
                   }
                 }
                 if(!$or||$i==$arr['tx']-1){
-                  $qer = $qer.' ) ';
+                  $qer = $qer.' )';
                 }
               }
             }
 
             for($i=0;$i<$arr['pd'];$i++){
+              $or=$input[$key]['pd']['or'];
+              $pd=$input[$key]['pd'][$i+1]['pd'];
               if($pd!=''){
                 if($first){
                   $qer = $qer.' WHERE';
@@ -282,7 +287,7 @@ $tablename='';
                   $qer = $qer.' AND';
                 }
                 if(!$or||$i==0){
-                  $qer = $qer.' ( ';
+                  $qer = $qer.' (';
                 }
                 foreach($arr['en'] as $index=>$names){
                   if($index>0){
@@ -291,12 +296,12 @@ $tablename='';
                   $qer = $qer.' `'.$names."`='".$pd."'";
                 }
                 if(!$or||$i==$arr['pd']-1){
-                  $qer = $qer.' ) ';
+                  $qer = $qer.' )';
                 }
               }
             }
           }
-*/
+
 
           $qer = $qer.' ORDER BY `'.$sort.'` '.$order;
           var_dump($qer);
@@ -308,7 +313,7 @@ $tablename='';
           while($row = $res->fetch_array(MYSQLI_BOTH)){
             echo('<tr>');
             foreach($items as $key=>$arr){
-              if($disp[$key]){
+              if($input[$key]['disp']){
                 foreach($arr['en'] as $names){
                   echo('<td class="'.$key.'">'.$row[$names].'</td>');
                 }
