@@ -33,39 +33,32 @@
 
         <?php
 /*▼▼▼▼▼▼項目配列▼▼▼▼▼▼*/
-$tablename='';
+          $tablename='characteristic';
           $items=[
-'no'=>['ja'=>'No','en'=>['no'],'ex'=>'通し番号','pd'=>0,'tx'=>0,'vl'=>2,'wd'=>50],
-'name'=>['ja'=>'名前','en'=>['name'],'ex'=>'個性','pd'=>0,'tx'=>1,'vl'=>0,'wd'=>200],
-'name_ka'=>['ja'=>'漢字','en'=>['name_ka'],'ex'=>'漢字で表示した時の表記(BW以降)','pd'=>0,'tx'=>1,'vl'=>0,'wd'=>200],
-'name_en'=>['ja'=>'英語','en'=>['name_en'],'ex'=>'英語版での表記','pd'=>0,'tx'=>1,'vl'=>0,'wd'=>200],
-'mod'=>['ja'=>'余り','en'=>['mod'],'ex'=>'一番高い個体値を5で割った余り','pd'=>1,'tx'=>0,'vl'=>1,'wd'=>50],
-'stat'=>['ja'=>'能力','en'=>['stat'],'ex'=>'一番高いステータス','pd'=>1,'tx'=>0,'vl'=>0,'wd'=>50]
-//''=>['ja'=>'','en'=>[''],'ex'=>'','pd'=>0,'tx'=>0,'vl'=>0,'wd'=>0],
+'no'=>['ja'=>'No','en'=>['no'],'ex'=>'通し番号','sc'=>0,'lk'=>0,'vl'=>2,'wd'=>50],
+'name'=>['ja'=>'名前','en'=>['name'],'ex'=>'個性','sc'=>0,'lk'=>1,'vl'=>0,'wd'=>200],
+'name_ka'=>['ja'=>'漢字','en'=>['name_ka'],'ex'=>'漢字で表示した時の表記(BW以降)','sc'=>0,'lk'=>1,'vl'=>0,'wd'=>200],
+'name_en'=>['ja'=>'英語','en'=>['name_en'],'ex'=>'英語版での表記','sc'=>0,'lk'=>1,'vl'=>0,'wd'=>200],
+'mod'=>['ja'=>'余り','en'=>['mod'],'ex'=>'一番高い個体値を5で割った余り','sc'=>1,'lk'=>0,'vl'=>1,'wd'=>50],
+'stat'=>['ja'=>'能力','en'=>['stat'],'ex'=>'一番高いステータス','sc'=>1,'lk'=>0,'vl'=>0,'wd'=>50]
+//''=>['ja'=>'','en'=>[''],'ex'=>'','sc'=>0,'lk'=>0,'vl'=>0,'wd'=>0],
 ];
 
 /*▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲*/
 
+          $ref=['vl'=>['pd','tx'],'lk'=>['pd','tx'],'sc'=>['pd']];
           $input=[];
           foreach($items as $key=>$arr){
             $input[$key]['disp']=$_GET[$key];
-            for($i=0;$i<$arr['vl'];$i++){
-              if($i==0){$input[$key]['vl']['or']=$_GET[$key.'_vlor'];}
-              $input[$key]['vl'][$i+1]['pd']=$_GET[$key.'_rf'.($i+1)];
-              $input[$key]['vl'][$i+1]['tx']=$_GET[$key.'_vl'.($i+1)];
-            }
-            for($i=0;$i<$arr['tx'];$i++){
-              if($i==0){
-                $input[$key]['tx']['or']=$_GET[$key.'_txor'];
+            foreach($ref as $type=>$inns){
+              if($arr[$type]>1){
+                $input[$key][$type]['or']=$_GET[$key.'_'.$type.'or'];
               }
-              $input[$key]['tx'][$i+1]['pd']=$_GET[$key.'_lk'.($i+1)];
-              $input[$key]['tx'][$i+1]['tx']=$_GET[$key.'_tx'.($i+1)];
-            }
-            for($i=0;$i<$arr['pd'];$i++){
-              if($i==0){
-                $input[$key]['pd']['or']=$_GET[$key.'_pdor'];
+              foreach($inns as $in){
+                for($i=0;$i<$arr[$type];$i++){
+                  $input[$key][$type][$i+1][$in]=$_GET[$key.'_'.$type.$in.($i+1)];
+                }
               }
-              $input[$key]['pd'][$i+1]['pd']=$_GET[$key.'_pd'.($i+1)];
             }
           }
 
@@ -103,29 +96,19 @@ $tablename='';
 
               // onChange="sele(".$i.");"
 
-              for($i=1;$i<=$arr['tx'];$i++){
-                echo('<input type="text" name="'.$key.'_tx'.$i.'" value="'.'">');
-                echo('<select class="like" name="'.$key.'_lk'.$i.'"></select>');
-              }
-              //if($arr['tx']&&count($arr['en'])>1){
-              if($arr['tx']>1){
-                echo('<label><input type="checkbox" name="'.$key.'_txor" value="1">OR検索</label>');
-              }
-
-              for($i=1;$i<=$arr['vl'];$i++){
-                echo('<input type="text" name="'.$key.'_vl'.$i.'" value="'.'">');
-                echo('<select class="refine" name="'.$key.'_rf'.$i.'"></select>');
-              }
-              //if($arr['vl']&&count($arr['en'])>1){
-              if($arr['vl']>1){
-                echo('<label><input type="checkbox" name="'.$key.'_vlor" value="1">OR検索</label>');
-              }
-
-              for($i=1;$i<=$arr['pd'];$i++){
-                echo('<select name="'.$key.'_pd'.$i.'" class="pulldown"></select>');
-              }
-              if($arr['pd']&&count($arr['en'])>1){
-                echo('<label><input type="checkbox" name="'.$key.'_pdor" value="1">OR検索</label>');
+              foreach($ref as $type=>$inns){
+                for($i=0;$i<$arr[$type];$i++){
+                  if(in_array('tx',$inns)){
+                    echo('<input type="text" class="reftx" name="'.$key.'_'.$type.'tx'.($i+1).'">');
+                  }
+                  if(in_array('pd',$inns)){
+                    echo('<select class="refpd '.$type.'" name="'.$key.'_'.$type.'pd'.($i+1).'"></select>');
+                  }
+                }
+                //if($arr['tx']&&count($arr['en'])>1){
+                if($arr[$type]>1){
+                  echo('<label><input type="checkbox" class="refor" name="'.$key.'_'.$type.'or" value="1">OR検索</label>');
+                }
               }
 
               echo("<br>\n");
@@ -197,11 +180,21 @@ $tablename='';
           $sql->set_charset('sjis');
 
           /*■SQL作成■*/
-          $qer = 'SELECT * FROM characteristic';
+          $qer = 'SELECT * FROM '.$tablename;
           /*●検索文作成●*/
 
           $first=true;
-
+/*
+          function connect(&$text,&$first,$times,$or){
+            if($first){
+              $text=$text.' WHERE';
+              $first=false;
+            }elseif($times>0&&$or){
+              $text=$text.' OR';
+            }else{
+              $text=$text.' AND';
+            }
+          }
 
           foreach($items as $key=>$arr){
             for($i=0;$i<$arr['vl'];$i++){
@@ -209,6 +202,8 @@ $tablename='';
               $tx=$input[$key]['vl'][$i+1]['tx'];
               $pd=$input[$key]['vl'][$i+1]['pd'];
               if($tx!=''&&$pd!=''){
+                connect($qer,$first,$i,$or);
+
                 if($first){
                   $qer = $qer.' WHERE';
                   $first=false;
@@ -302,7 +297,7 @@ $tablename='';
             }
           }
 
-
+*/
           $qer = $qer.' ORDER BY `'.$sort.'` '.$order;
           var_dump($qer);
           var_dump($input);
@@ -326,9 +321,9 @@ $tablename='';
           /*プルダウン選択作成*/
           $i=0;
           foreach($items as $key=>$arr){
-            if($arr['pd']==0){continue;}
+            if($arr['sc']==0){continue;}
             $itemlist[$i]=array();
-            $qer = 'SELECT DISTINCT `'.$arr['en'][0].'` FROM characteristic';
+            $qer = 'SELECT DISTINCT `'.$arr['en'][0].'` FROM '.$tablename;
             $res = $sql->query($qer);
             while($row = $res->fetch_array(MYSQLI_BOTH)){
               $itemlist[$i][]=$row[$arr['en'][0]];
@@ -346,44 +341,40 @@ $tablename='';
       <script type="text/javascript">
         window.onload=function(){
           refineset();
-          likeset();
-          pulldownset();
           beforeset();
         }
 
         function refineset(){
-          var refine=document.getElementsByClassName("refine");
+          /******** vl **********/
+          var vl=document.getElementsByClassName("vl");
           var item={"":"絞り込み","=":"等しい","<>":"等しくない",">=":"以上","<=":"以下",">":"より大きい","<":"より小さい"};
           var i=0;
-          for(var p=0;p<refine.length;p++){
+          for(var p=0;p<vl.length;p++){
             i=0;
             for(var key in item){
-              refine[p].options[i]=new Option(item[key],key);
+              vl[p].options[i]=new Option(item[key],key);
               i++;
             }
           }
-        }
-
-        function likeset(){
-          var like=document.getElementsByClassName("like");
+          /********* lk *********/
+          var lk=document.getElementsByClassName("lk");
           var item={"":"絞り込み","match":"と一致する","include":"を含む","start":"から始まる","end":"で終わる"};
           var i=0;
-          for(var p=0;p<like.length;p++){
+          for(var p=0;p<lk.length;p++){
             i=0;
             for(var key in item){
-              like[p].options[i]=new Option(item[key],key);
+              lk[p].options[i]=new Option(item[key],key);
               i++;
             }
           }
-        }
-        function pulldownset(){
-          var pulldown=document.getElementsByClassName("pulldown");
+          /********* sc **********/
+          var sc=document.getElementsByClassName("sc");
           <?php
             for($i=0;$i<count($itemlist);$i++){
-              echo('pulldown['.$i.'].options[0]=new Option("全て選択","");');
+              echo('sc['.$i.'].options[0]=new Option("全て選択","");');
               echo("\n");
               for($j=0;$j<count($itemlist[$i]);$j++){
-                echo('pulldown['.$i.'].options['.($j+1).']=new Option("'.$itemlist[$i][$j].'","'.$itemlist[$i][$j].'");');
+                echo('sc['.$i.'].options['.($j+1).']=new Option("'.$itemlist[$i][$j].'","'.$itemlist[$i][$j].'");');
                 echo("\n");
               }
             }
@@ -391,33 +382,35 @@ $tablename='';
         }
 
         function beforeset(){
-          var refine=document.getElementsByClassName("refine");
-          var like=document.getElementsByClassName("like");
-          var pulldown=document.getElementsByClassName("pulldown");
+          var tx=document.getElementsByClassName("reftx");
+          var pd=document.getElementsByClassName("refpd");
+          var or=document.getElementsByClassName("refor");
           <?php
+
+            $t=0;
+            $p=0;
+            $o=0;
             foreach($items as $key=>$arr){
-              $p=0;
-              for($i=0;$i<$arr['vl'];$i++){
-                echo("for(i=0;i<7;i++){\n");
-                  echo('if(refine['.$p.'].options[i].value=="'.$input[$key]['vl'][$i+1]['pd']."\"){\n");
-                    echo("refine[".$p."].options[i].selected=true;\n");
+              foreach($ref as $type=>$inns){
+                for($i=0;$i<$arr[$type];$i++){
+                  if(in_array('pd',$inns)){
+                    echo("for(i=0;i<7;i++){\n");
+                    echo('if(pd['.$p.'].options[i].value=="'.$input[$key][$type][$i+1]['pd']."\"){\n");
+                    echo("pd[".$p."].options[i].selected=true;\n");
                     echo("break;\n}\n}\n");
-                $p++;
-              }
-              $p=0;
-              for($i=0;$i<$arr['tx'];$i++){
-                echo("for(i=0;i<5;i++){\n");
-                  echo('if(like['.$p.'].options[i].value=="'.$input[$key]['vl'][$i+1]['pd']."\"){\n");
-                    echo("like[".$p."].options[i].selected=true;\n");
-                    echo("break;\n}\n}\n");
-                $p++;
-              }
-              for($i=0;$i<$arr['pd'];$i++){
-                echo("for(i=0;i<100;i++){\n");
-                  echo('if(pulldown['.$p.'].options[i].value=="'.$input[$key]['vl'][$i+1]['pd']."\"){\n");
-                    echo("pulldown[".$p."].options[i].selected=true;\n");
-                    echo("break;\n}\n}\n");
-                $p++;
+                    $p++;
+                  }
+                  if(in_array('tx',$inns)){
+                    echo('tx['.$t.'].value="'.$input[$key][$type][$i+1]['tx'].'";');
+                    $t++;
+                  }
+                }
+                if($arr[$type]>1){
+                  if($input[$key][$type]['or']==1){
+                    echo('or['.$o.'].checked=true;');
+                  }
+                  $o++;
+                }
               }
             }
           ?>
