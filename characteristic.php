@@ -47,6 +47,7 @@
 /*▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲*/
 
           $ref=['vl'=>['pd','tx'],'lk'=>['pd','tx'],'sc'=>['pd']];
+
           $input=[];
           foreach($items as $key=>$arr){
             $input[$key]['disp']=$_GET[$key];
@@ -184,25 +185,25 @@
           /*●検索文作成●*/
 
           $first=true;
-/*
-          function connect(&$text,&$first,$times,$or){
-            if($first){
-              $text=$text.' WHERE';
-              $first=false;
-            }elseif($times>0&&$or){
-              $text=$text.' OR';
-            }else{
-              $text=$text.' AND';
-            }
-          }
-
           foreach($items as $key=>$arr){
-            for($i=0;$i<$arr['vl'];$i++){
-              $or=$input[$key]['vl']['or'];
-              $tx=$input[$key]['vl'][$i+1]['tx'];
-              $pd=$input[$key]['vl'][$i+1]['pd'];
-              if($tx!=''&&$pd!=''){
-                connect($qer,$first,$i,$or);
+            foreach($ref as $type=>$inns){
+              for($i=0;$i<$arr[$type];$i++){
+                if(array_key_exists('or',$input[$key][$type])){
+                  $or=$input[$key][$type]['or'];
+                }else{
+                  $or=0;
+                }
+
+                $pass=0;
+                if(array_key_exists('tx',$input[$key][$type][$i+1])){
+                  $tx=$input[$key][$type][$i+1]['tx'];
+                  if($tx==''){$pass=1;}
+                }
+                if(array_key_exists('pd',$input[$key][$type][$i+1])){
+                  $pd=$input[$key][$type][$i+1]['pd'];
+                  if($pd==''){$pass=1;}
+                }
+                if($pass){continue;}
 
                 if($first){
                   $qer = $qer.' WHERE';
@@ -212,6 +213,7 @@
                 }else{
                   $qer = $qer.' AND';
                 }
+
                 if(!$or||$i==0){
                   $qer = $qer.' (';
                 }
@@ -219,88 +221,42 @@
                   if($index>0){
                     $qer = $qer.' OR';
                   }
-                  $qer = $qer.' `'.$names.'`'.$pd."'".$tx."'";
-                }
-                if(!$or||$i==$arr['vl']-1){
-                  $qer = $qer.' )';
-                }
-              }
-            }
-
-            for($i=0;$i<$arr['tx'];$i++){
-              $or=$input[$key]['tx']['or'];
-              $tx=$input[$key]['tx'][$i+1]['tx'];
-              $pd=$input[$key]['tx'][$i+1]['pd'];
-              if($pd!=''&&$tx!=''){
-                if($first){
-                  $qer = $qer.' WHERE';
-                  $first=false;
-                }elseif($i>0&&$or){
-                  $qer = $qer.' OR';
-                }else{
-                  $qer = $qer.' AND';
-                }
-                if(!$or||$i==0){
-                  $qer = $qer.' (';
-                }
-                foreach($arr['en'] as $index=>$names){
-                  if($index>0){
-                    $qer = $qer.' OR';
-                  }
-                  $qer = $qer.' `'.$names.'` LIKE';
-                  switch($pd){
-                    case 'match':
-                      $qer = $qer." '".$tx."'";
+                  switch($type){
+                    case 'vl':
+                      $qer = $qer.' `'.$names.'`'.$pd."'".$tx."'";
                       break;
-                    case 'include':
-                      $qer = $qer." '%".$tx."%'";
+                    case 'lk':
+                      $qer = $qer.' `'.$names.'` LIKE';
+                      switch($pd){
+                        case 'match':
+                          $qer = $qer." '".$tx."'";
+                          break;
+                        case 'include':
+                          $qer = $qer." '%".$tx."%'";
+                          break;
+                        case 'start':
+                          $qer = $qer." '".$tx."%'";
+                          break;
+                        case 'end':
+                          $qer = $qer." '%".$tx."'";
+                          break;
+                      }
                       break;
-                    case 'start':
-                      $qer = $qer." '".$tx."%'";
-                      break;
-                    case 'end':
-                      $qer = $qer." '%".$tx."'";
+                    case 'sc':
+                      $qer = $qer.' `'.$names."`='".$pd."'";
                       break;
                   }
                 }
-                if(!$or||$i==$arr['tx']-1){
-                  $qer = $qer.' )';
-                }
-              }
-            }
-
-            for($i=0;$i<$arr['pd'];$i++){
-              $or=$input[$key]['pd']['or'];
-              $pd=$input[$key]['pd'][$i+1]['pd'];
-              if($pd!=''){
-                if($first){
-                  $qer = $qer.' WHERE';
-                  $first=false;
-                }elseif($i>0&&$or){
-                  $qer = $qer.' OR';
-                }else{
-                  $qer = $qer.' AND';
-                }
-                if(!$or||$i==0){
-                  $qer = $qer.' (';
-                }
-                foreach($arr['en'] as $index=>$names){
-                  if($index>0){
-                    $qer = $qer.' OR ';
-                  }
-                  $qer = $qer.' `'.$names."`='".$pd."'";
-                }
-                if(!$or||$i==$arr['pd']-1){
+                if(!$or||$i==$arr[$type]-1){
                   $qer = $qer.' )';
                 }
               }
             }
           }
 
-*/
           $qer = $qer.' ORDER BY `'.$sort.'` '.$order;
           var_dump($qer);
-          var_dump($input);
+
           /*■データ取り出し■*/
           $res = $sql->query($qer);
           if(!$res){die('エラー');}
