@@ -1,53 +1,55 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html>
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=shift_jis">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="Content-Style-Type" content="text/css">
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
   <meta name="format-detection" content="telephone=no">
-  <link media="only screen and (max-device-width:480px)" href="mobile.css" type="text/css" rel="stylesheet" />
-  <link media="screen and (min-device-width:481px)" href="design.css" type="text/css" rel="stylesheet" />
+  <link media="only screen and (max-device-width:480px)" href="design-sp.css" type="text/css" rel="stylesheet" />
+  <link media="screen and (min-device-width:481px)" href="design-pc.css" type="text/css" rel="stylesheet" />
 
-<!--¥¥¥¥¥ƒ^ƒCƒgƒ‹¥¥¥¥¥-->
-  <title>‚±‚¹‚¢ - Pnƒ‰ƒ{</title>
-<!--££££££££££££££-->
+  <!--â–¼â–¼â–¼ã‚¿ã‚¤ãƒˆãƒ«â–¼â–¼â–¼-->
+  <title>ã“ã›ã„ - Pnãƒ©ãƒœ</title>
+  <!--â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²-->
 </head>
 
-<!--¡ƒ^ƒCƒgƒ‹¡-->
+<!--ã‚¿ã‚¤ãƒˆãƒ«-->
 <?php	include 'title.html';	?>
 
-<!--¡ƒƒjƒ…[¡-->
+<!--ãƒ¡ãƒ‹ãƒ¥ãƒ¼-->
 <?php	include 'menu.html';	?>
-<br style="clear:left;">
 
-    <!--¡ƒƒCƒ“¡-->
+    <br style="clear:left;">
+
+    <!--ãƒ¡ã‚¤ãƒ³-->
     <div id="main">
-      <!--¡•¶Í•”¡-->
+      <!--æ–‡ç« éƒ¨-->
       <div class="text">
-<!--¥¥¥¥ƒ^ƒCƒgƒ‹E‰ðà¥¥¥¥-->
-        <h1>‚±‚¹‚¢(ŒÂ«)</h1>
-        ƒ|ƒPƒ‚ƒ“‚Ì‚±‚¹‚¢‚Æ‚ÍA‘æŽl¢‘ã(ƒ_ƒCƒ„ƒ‚ƒ“ƒhEƒp[ƒ‹)‚©‚ç’Ç‰Á‚³‚ê‚½—v‘f‚ÅA<br>‚»‚Ìƒ|ƒPƒ‚ƒ“‚Ìˆê”Ô‚‚¢ŒÂ‘Ì’l‚ðŽ¦‚·B<br>
-        ˆê”Ô‚‚¢ŒÂ‘Ì’l‚ÌƒXƒe[ƒ^ƒX‚ÆA‚»‚ÌŒÂ‘Ì’l‚ð5‚ÅŠ„‚Á‚½—]‚è‚É‚æ‚Á‚ÄŒˆ’è‚·‚éB<br>
-<!--£££££££££££££££-->
+        <!--â–¼â–¼â–¼ã‚¿ã‚¤ãƒˆãƒ«ãƒ»è§£èª¬â–¼â–¼â–¼-->
+        <h1>ã“ã›ã„(å€‹æ€§)</h1>
+        ãƒã‚±ãƒ¢ãƒ³ã®ã“ã›ã„ã¨ã¯ã€ç¬¬å››ä¸–ä»£(ãƒ€ã‚¤ãƒ¤ãƒ¢ãƒ³ãƒ‰ãƒ»ãƒ‘ãƒ¼ãƒ«)ã‹ã‚‰è¿½åŠ ã•ã‚ŒãŸè¦ç´ ã§ã€<br>ãã®ãƒã‚±ãƒ¢ãƒ³ã®ä¸€ç•ªé«˜ã„å€‹ä½“å€¤ã‚’ç¤ºã™ã€‚<br>
+        ä¸€ç•ªé«˜ã„å€‹ä½“å€¤ã®ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹ã¨ã€ãã®å€‹ä½“å€¤ã‚’5ã§å‰²ã£ãŸä½™ã‚Šã«ã‚ˆã£ã¦æ±ºå®šã™ã‚‹ã€‚<br>
+        <!--â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²-->
 
         <?php
-/*¥¥¥¥¥¥€–Ú”z—ñ¥¥¥¥¥¥*/
+/*â–¼â–¼â–¼é …ç›®é…åˆ—â–¼â–¼â–¼*/
           $tablename='characteristic';
           $items=[
-'no'=>['ja'=>'No','en'=>['no'],'ex'=>'’Ê‚µ”Ô†','sc'=>0,'lk'=>0,'vl'=>2,'wd'=>50],
-'name'=>['ja'=>'–¼‘O','en'=>['name'],'ex'=>'ŒÂ«','sc'=>0,'lk'=>1,'vl'=>0,'wd'=>200],
-'name_ka'=>['ja'=>'Š¿Žš','en'=>['name_ka'],'ex'=>'Š¿Žš‚Å•\Ž¦‚µ‚½Žž‚Ì•\‹L(BWˆÈ~)','sc'=>0,'lk'=>1,'vl'=>0,'wd'=>200],
-'name_en'=>['ja'=>'‰pŒê','en'=>['name_en'],'ex'=>'‰pŒê”Å‚Å‚Ì•\‹L','sc'=>0,'lk'=>1,'vl'=>0,'wd'=>200],
-'mod'=>['ja'=>'—]‚è','en'=>['mod'],'ex'=>'ˆê”Ô‚‚¢ŒÂ‘Ì’l‚ð5‚ÅŠ„‚Á‚½—]‚è','sc'=>1,'lk'=>0,'vl'=>1,'wd'=>50],
-'stat'=>['ja'=>'”\—Í','en'=>['stat'],'ex'=>'ˆê”Ô‚‚¢ƒXƒe[ƒ^ƒX','sc'=>1,'lk'=>0,'vl'=>0,'wd'=>50]
+'no'=>['ja'=>'No','en'=>['no'],'ex'=>'é€šã—ç•ªå·','sc'=>0,'lk'=>0,'vl'=>2,'wd'=>50],
+'name'=>['ja'=>'åå‰','en'=>['name'],'ex'=>'å€‹æ€§','sc'=>0,'lk'=>1,'vl'=>0,'wd'=>200],
+'name_ka'=>['ja'=>'æ¼¢å­—','en'=>['name_ka'],'ex'=>'æ¼¢å­—ã§è¡¨ç¤ºã—ãŸæ™‚ã®è¡¨è¨˜(BWä»¥é™)','sc'=>0,'lk'=>1,'vl'=>0,'wd'=>200],
+'name_en'=>['ja'=>'è‹±èªž','en'=>['name_en'],'ex'=>'è‹±èªžç‰ˆã§ã®è¡¨è¨˜','sc'=>0,'lk'=>1,'vl'=>0,'wd'=>200],
+'mod'=>['ja'=>'ä½™ã‚Š','en'=>['mod'],'ex'=>'ä¸€ç•ªé«˜ã„å€‹ä½“å€¤ã‚’5ã§å‰²ã£ãŸä½™ã‚Š','sc'=>1,'lk'=>0,'vl'=>1,'wd'=>50],
+'stat'=>['ja'=>'èƒ½åŠ›','en'=>['stat'],'ex'=>'ä¸€ç•ªé«˜ã„ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹','sc'=>1,'lk'=>0,'vl'=>0,'wd'=>50]
 //''=>['ja'=>'','en'=>[''],'ex'=>'','sc'=>0,'lk'=>0,'vl'=>0,'wd'=>0],
 ];
 
-/*£££££££££££££££££*/
+/*â–²â–²â–²â–²â–²â–²â–²â–²â–²â–²*/
 
           $ref=['vl'=>['pd','tx'],'lk'=>['pd','tx'],'sc'=>['pd']];
 
+          //æ¤œç´¢å†…å®¹ã‚’å¤‰æ•°ã¸
           $input=[];
           foreach($items as $key=>$arr){
             $input[$key]['disp']=$_GET[$key];
@@ -65,7 +67,13 @@
 
           $sort=$_GET['sort'];
           $order=$_GET['order'];
-          $issub=$_GET['search'];
+          $search=$_GET['search'];
+
+          if(is_null($search)){
+            foreach($items as $key=>$arr){
+              $input[$key]['disp']=1;
+            }
+          }
         ?>
 
 <style type="text/css">
@@ -83,10 +91,11 @@
   ?>
 </style>
 
-<!--¡•\Ž¦Ý’èƒtƒH[ƒ€¡-->
-        <form name="display" action="characteristic.php" method="GET">
-          <input type="button" name="all_c" value="‘S‚Ä‘I‘ð" id="all_c" onClick="allcheck(1);">
-          <input type="button" name="all_d" value="‘S‚Ä‰ðœ" id="all_d" onClick="allcheck(0);">
+<!--è¡¨ç¤ºè¨­å®šãƒ•ã‚©ãƒ¼ãƒ -->
+        <?php if(!$search){echo('<!--');} ?>
+        <?php echo('<form name="display" action="'.$tablename.'.php" method="GET">'); ?>
+          <input type="button" name="all_c" value="å…¨ã¦é¸æŠž" id="all_c" onClick="allcheck(1);">
+          <input type="button" name="all_d" value="å…¨ã¦è§£é™¤" id="all_d" onClick="allcheck(0);">
           <br>
           <?php
             foreach($items as $key=>$arr){
@@ -94,54 +103,47 @@
               if($input[$key]['disp']==1){echo(' checked');}
               echo('>');
               echo($arr['ja'].':'.$arr['ex']."</label><br>\n");
-
-              // onChange="sele(".$i.");"
-
-              foreach($ref as $type=>$inns){
+               foreach($ref as $type=>$inns){
                 for($i=0;$i<$arr[$type];$i++){
                   if(in_array('tx',$inns)){
                     echo('<input type="text" class="reftx" name="'.$key.'_'.$type.'tx'.($i+1).'">');
-                  }
+                    }
                   if(in_array('pd',$inns)){
                     echo('<select class="refpd '.$type.'" name="'.$key.'_'.$type.'pd'.($i+1).'"></select>');
                   }
                 }
-                //if($arr['tx']&&count($arr['en'])>1){
                 if($arr[$type]>1){
-                  echo('<label><input type="checkbox" class="refor" name="'.$key.'_'.$type.'or" value="1">ORŒŸõ</label>');
+                  echo('<label><input type="checkbox" class="refor" name="'.$key.'_'.$type.'or" value="1">ORæ¤œç´¢</label>');
                 }
               }
-
               echo("<br>\n");
             }
           ?>
-          <input type="hidden" name="search" value="1">
 
-<!--¡•À‚×‘Ö‚¦‘I‘ð¡-->
           <select name="sort">
             <?php
               foreach($items as $key=>$arr){
-                echo('<option value="'.$key.'"');
-                if($sort==$key){echo(' selected');}
-                echo('>'.$arr['ja'].'</option>');
+                $i=1;
+                foreach($arr['en'] as $en){
+                  echo('<option value="'.$en.'"');
+                  if($sort==$key){echo(' selected');}
+                  echo('>'.$arr['ja']);
+                  if(count($arr['en'])>1){echo($i);$i++;}
+                  echo('</option>');
+                }
               }
             ?>
           </select>
           <select name="order">
-            <option value="ASC" <?php if($order=="ASC"){echo(" selected");} ?>>¸‡</option>
-            <option value="DESC" <?php if($order=="DESC"){echo(" selected");} ?>>~‡</option>
+            <option value="ASC" <?php if($order=="ASC"){echo(" selected");} ?>>æ˜‡é †</option>
+            <option value="DESC" <?php if($order=="DESC"){echo(" selected");} ?>>é™é †</option>
           </select>
-          <input type="submit" id="load" value="XV"><br>
+          <input type="submit" id="load" value="æ›´æ–°"><br>
           <input type="reset"><br>
         </form>
+        <?php if(!$search){echo('-->');} ?>
 
         <script type="text/javascript">
-          <?php
-            if(!$issub){
-              echo('all_c.click();load.click();');
-            }
-          ?>
-
           function allcheck(state){
             var elem = document.getElementsByClassName("disp");
             for(var i=0;i<elem.length;i++){
@@ -149,13 +151,14 @@
             }
           }
         </script>
-      </div>
+      </div><!--.text-->
 
+      <?php if($search){echo('<!--');} ?>
 
-      <!--¡ƒe[ƒuƒ‹•”¡-->
+      <?php echo('<a href="'.$tablename.'.php?'.$_SERVER['QUERY_STRING'].'&search=1">æ¤œç´¢æ¡ä»¶ã‚’å…¥åŠ›</a>'); ?>
+
       <div id="listdiv">
       <table id="list">
-        <!--œƒwƒbƒ_œ-->
         <thead>
           <tr id="head">
           <?php
@@ -167,9 +170,8 @@
               }
             }
           ?>
-          </tr>
+          </tr><!--#head-->
         </thead>
-        <!--œƒf[ƒ^œ-->
         <tbody id="data">
         <?php
 
@@ -178,12 +180,11 @@
 
           if(!$sql){die("MySQL error\n");}
 
-          $sql->set_charset('sjis');
+          $sql->set_charset('utf8');
 
-          /*¡SQLì¬¡*/
+          /*SQLä½œæˆ*/
           $qer = 'SELECT * FROM '.$tablename;
-          /*œŒŸõ•¶ì¬œ*/
-
+          /*æ¤œç´¢æ–‡ä½œæˆ*/
           $first=true;
           foreach($items as $key=>$arr){
             foreach($ref as $type=>$inns){
@@ -253,13 +254,15 @@
               }
             }
           }
+          if(!is_null($sort)){
+            $qer = $qer.' ORDER BY `'.$sort.'` '.$order;
+          }
+          //var_dump($qer);
+          //var_dump($_SERVER['QUERY_STRING']);
 
-          $qer = $qer.' ORDER BY `'.$sort.'` '.$order;
-          var_dump($qer);
-
-          /*¡ƒf[ƒ^Žæ‚èo‚µ¡*/
+          /*ãƒ‡ãƒ¼ã‚¿å–ã‚Šå‡ºã—*/
           $res = $sql->query($qer);
-          if(!$res){die('ƒGƒ‰[');}
+          if(!$res){die('ã‚¨ãƒ©ãƒ¼');}
 
           while($row = $res->fetch_array(MYSQLI_BOTH)){
             echo('<tr>');
@@ -274,7 +277,7 @@
           }
           mysqli_free_result($res);
 
-          /*ƒvƒ‹ƒ_ƒEƒ“‘I‘ðì¬*/
+          /*ãƒ—ãƒ«ãƒ€ã‚¦ãƒ³é¸æŠžä½œæˆ*/
           $i=0;
           foreach($items as $key=>$arr){
             if($arr['sc']==0){continue;}
@@ -289,10 +292,12 @@
           mysqli_free_result($res);
 
           mysql_close();
+
         ?>
-        </tbody>
-      </table>
-      </div>
+        </tbody><!--#data-->
+      </table><!--list-->
+      </div><!--listdiv-->
+      <?php if($search){echo('-->');} ?>
 
       <script type="text/javascript">
         window.onload=function(){
@@ -303,7 +308,7 @@
         function refineset(){
           /******** vl **********/
           var vl=document.getElementsByClassName("vl");
-          var item={"":"i‚èž‚Ý","=":"“™‚µ‚¢","<>":"“™‚µ‚­‚È‚¢",">=":"ˆÈã","<=":"ˆÈ‰º",">":"‚æ‚è‘å‚«‚¢","<":"‚æ‚è¬‚³‚¢"};
+          var item={"":"çµžã‚Šè¾¼ã¿","=":"ç­‰ã—ã„","<>":"ç­‰ã—ããªã„",">=":"ä»¥ä¸Š","<=":"ä»¥ä¸‹",">":"ã‚ˆã‚Šå¤§ãã„","<":"ã‚ˆã‚Šå°ã•ã„"};
           var i=0;
           for(var p=0;p<vl.length;p++){
             i=0;
@@ -314,7 +319,7 @@
           }
           /********* lk *********/
           var lk=document.getElementsByClassName("lk");
-          var item={"":"i‚èž‚Ý","match":"‚Æˆê’v‚·‚é","include":"‚ðŠÜ‚Þ","start":"‚©‚çŽn‚Ü‚é","end":"‚ÅI‚í‚é"};
+          var item={"":"çµžã‚Šè¾¼ã¿","match":"ã¨ä¸€è‡´ã™ã‚‹","include":"ã‚’å«ã‚€","start":"ã‹ã‚‰å§‹ã¾ã‚‹","end":"ã§çµ‚ã‚ã‚‹"};
           var i=0;
           for(var p=0;p<lk.length;p++){
             i=0;
@@ -327,7 +332,7 @@
           var sc=document.getElementsByClassName("sc");
           <?php
             for($i=0;$i<count($itemlist);$i++){
-              echo('sc['.$i.'].options[0]=new Option("‘S‚Ä‘I‘ð","");');
+              echo('sc['.$i.'].options[0]=new Option("å…¨ã¦é¸æŠž","");');
               echo("\n");
               for($j=0;$j<count($itemlist[$i]);$j++){
                 echo('sc['.$i.'].options['.($j+1).']=new Option("'.$itemlist[$i][$j].'","'.$itemlist[$i][$j].'");');
@@ -374,12 +379,12 @@
 
       </script>
 
-      <!--¡ƒ[ƒ‹ƒtƒH[ƒ€¡-->
+      <!--ãƒ¡ãƒ¼ãƒ«ãƒ•ã‚©ãƒ¼ãƒ -->
       <?php include 'mailform/contact.html';	?>
-    </div>
+    </div><!--#main-->
 
-    <!--¡ƒtƒbƒ^[¡-->
+    <!--ãƒ•ãƒƒã‚¿ãƒ¼-->
     <?php include 'footer.html'; ?>
-  </div>
+  </div><!--contents-->
 </body>
 </html>
