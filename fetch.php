@@ -340,3 +340,15 @@ if($arr[$type]>1){
 
       </script>
 
+<<<<<<< HEAD:characteristic.php
+=======
+      <!--メールフォーム-->
+      <?php include 'mailform/contact.html';	?>
+    </div><!--#main-->
+
+    <!--フッター-->
+    <?php include 'footer.html'; ?>
+  </div><!--contents-->
+</body>
+</html>
+>>>>>>> origin/master:fetch.php
